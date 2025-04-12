@@ -33,6 +33,7 @@ Este proyecto es una aplicación de consola que permite buscar información sobr
 ## Uso
 
 1. Ejecuta el archivo principal del proyecto:
+   ```bash
    python src/main.py
 
 2. Sigue las instrucciones en la consola para seleccionar qué tipo de información deseas buscar.
