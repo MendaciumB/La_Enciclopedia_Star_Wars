@@ -23,9 +23,11 @@ Este proyecto es una aplicación de consola que permite buscar información sobr
    git clone https://github.com/tu-usuario/la-enciclopedia-star-wars.git
    
 2. Navega al directorio del proyecto:
+   ```bash
    cd la-enciclopedia-star-wars
 
 3. Instala las dependencias necesarias:
+   ```bash
    pip install httpx
 
 ## Uso
