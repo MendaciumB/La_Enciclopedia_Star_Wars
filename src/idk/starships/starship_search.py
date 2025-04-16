@@ -1,13 +1,13 @@
 from httpx import Client as Session
-from .starships_functions.starships_func import search_starship_by_name, pages_list
+from .starships_functions.starships_func import search_starship_by_name, starship_page_list, starship_total_pages
 
 def starship_search(swapi_service: Session):
-    pages: list[list[str]] = pages_list(swapi_service)
-    total_pages: int = len(pages)
+    total_pages: int = starship_total_pages(swapi_service)
     current_page: int = 1
     
     while True:
-        print("\n", pages[current_page - 1])
+        if (page := starship_page_list(swapi_service, current_page)) is not None:
+            print("\n", page)
         print(f"Page {current_page}/{total_pages}")
 
         action = input("\nEnter 'n' for next page, 'p' for previous page, 'd' for details, or 'exit' to quit: ")

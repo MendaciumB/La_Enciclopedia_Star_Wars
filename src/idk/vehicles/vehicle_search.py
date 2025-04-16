@@ -1,13 +1,13 @@
 from httpx import Client as Session
-from .vehicles_functions.vehicles_func import vehicles_pages_list, search_vehicle_by_name
+from .vehicles_functions.vehicles_func import search_vehicle_by_name, vehicles_page_list, vehicles_total_pages
 
 def vehicle_search(swapi_service: Session):
-    pages: list[list[str]] = vehicles_pages_list(swapi_service)
-    total_pages: int = len(pages)
+    total_pages: int = vehicles_total_pages(swapi_service)
     current_page: int = 1
     
     while True:
-        print("\n", pages[current_page - 1])
+        if (page := vehicles_page_list(swapi_service, current_page)) is not None:
+            print("\n", page)
         print(f"Page {current_page}/{total_pages}")
 
         action = input("\nEnter 'n' for next page, 'p' for previous page, 'd' for details, or 'exit' to quit: ")

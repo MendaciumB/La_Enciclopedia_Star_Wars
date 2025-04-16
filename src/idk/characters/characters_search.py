@@ -1,13 +1,13 @@
 from httpx import Client as Session
-from .characters_functions.characters_func import search_character_by_name, character_pages_list
+from .characters_functions.characters_func import search_character_by_name, character_page_list, character_total_pages
 
 def character_search(swapi_service: Session):
-    pages: list[list[str]] = character_pages_list(swapi_service)
-    total_pages: int = len(pages)
     current_page: int = 1
+    total_pages: int = character_total_pages(swapi_service)
     
     while True:
-        print("\n", pages[current_page - 1])
+        if (page := character_page_list(swapi_service, current_page)) is not None:
+            print("\n", page)
         print(f"Page {current_page}/{total_pages}")
 
         action = input("\nEnter 'n' for next page, 'p' for previous page, 'd' for details, or 'exit' to quit: ")

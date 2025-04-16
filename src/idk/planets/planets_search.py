@@ -1,16 +1,16 @@
 from  httpx import Client as Session
-from .planets_functions.planets_func import search_planet_by_name, planets_pages_list
+from .planets_functions.planets_func import search_planet_by_name, planets_page_list, planets_total_pages
 
 
 def planets_search(swapi_service: Session):
     """Search for planets in the Star Wars API."""
 
-    pages: list[list[str]] = planets_pages_list(swapi_service)
-    total_pages: int = len(pages)
+    total_pages: int = planets_total_pages(swapi_service)
     current_page: int = 1
 
     while True:
-        print("\n", pages[current_page - 1])
+        if (pages := planets_page_list(swapi_service, current_page)) is not None:
+            print("\n", pages)
         print(f"Page {current_page}/{total_pages}")
 
         action = input("\nEnter 'n' for next page, 'p' for previous page, 'd' for details, or 'exit' to quit: ")

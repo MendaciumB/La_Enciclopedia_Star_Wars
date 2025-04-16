@@ -4,23 +4,17 @@ from ..models.films import Films
 from ...constants.constants import BASE_URL
 
 
-def search_film_name_by_id(session: Session, id: int) -> str | None:
-    """Search for a film by ID and return its name."""
 
-    if (response := get_handles_exception(session, f"{BASE_URL}films/{id}/")) is not None:
-        return response.json()["title"]
-    return None
-
-def films_pages_list(session: Session) -> list[str]:
+def films_list(session: Session) -> list[str] | None:
     """Get a list of film titles from the Star Wars API."""
     
-    page: int = 1
-    titles: list[str] = []
-    while page < 7:
-        if (response := search_film_name_by_id(session, page)) is not None:
-            titles.append(response)
-        page += 1
-    return titles
+    if (response := get_handles_exception(session, f"{BASE_URL}films/")) is not None:
+        result = response.json()["results"]
+        films: list[str] = []
+        for index in range(len(result)):
+            films.append(result[index]["title"])
+        return films
+    return None
 
 def search_film_by_title(session: Session, title: str) -> dict[str, str | list[str]] | None:
     """Search for a film by title and return its details."""
