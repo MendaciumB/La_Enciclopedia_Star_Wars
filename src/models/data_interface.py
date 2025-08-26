@@ -1,6 +1,7 @@
 from pydantic import BaseModel, HttpUrl
 from httpx import Client as Session
 from src.utils.search_name import search_field_by_url
+from typing import Any
 
 class Fields(BaseModel):
     homeworld: str | None = None
@@ -14,7 +15,8 @@ class Fields(BaseModel):
     people: list[HttpUrl] | list[str] | list[None] | None = None
     residents: list[HttpUrl] | list[str] | list[None] | None = None
 
-
+def load_data(payload: dict[str, Any], fields_type: type) -> Fields:
+    return fields_type(**payload)
 
 def search_for_each(session: Session, payload: list[HttpUrl] | list[str] | list[None], name: str = "name") -> list[str]:
     return [search_field_by_url(session, str(i), name) for i in payload]
