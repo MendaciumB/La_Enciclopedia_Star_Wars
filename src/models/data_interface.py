@@ -1,3 +1,4 @@
+from typing import Callable
 from pydantic import BaseModel, HttpUrl
 from httpx import Client as Session
 from src.utils.search_name import search_field_by_url
@@ -15,7 +16,7 @@ class Fields(BaseModel):
     people: list[HttpUrl] | list[str] | list[None] | None = None
     residents: list[HttpUrl] | list[str] | list[None] | None = None
 
-def load_data(payload: dict[str, Any], fields_type: type) -> Fields:
+def load_data(payload: dict[str, Any], fields_type: Callable) -> Callable:
     return fields_type(**payload)
 
 def search_for_each(session: Session, payload: list[HttpUrl] | list[str] | list[None], name: str = "name") -> list[str]:
